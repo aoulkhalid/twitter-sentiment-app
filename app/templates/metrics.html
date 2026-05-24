@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Métriques — SentimentX{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-1">Métriques du modèle final</h2>
+<p class="text-muted mb-4">Évaluation sur le jeu de test scellé (Section 8 du notebook).</p>
+
+{% macro show_plot(key, title, description) %}
+  <div class="card p-3 mb-4">
+    <h6 class="fw-bold">{{ title }}</h6>
+    <p class="text-muted small mb-2">{{ description }}</p>
+    {% if plots[key] %}
+      <img src="data:image/png;base64,{{ plots[key] }}" class="plot-img" alt="{{ title }}"/>
+    {% else %}
+      <div class="alert alert-secondary small py-2 mb-0">
+        Figure absente — lance pipeline.py pour générer les plots.
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{{ show_plot('confusion_matrix',   'Matrices de confusion',      'Comptes et normalisée par ligne.') }}
+{{ show_plot('per_class_metrics',  'Métriques par classe',       'Précision, rappel, F1 par sentiment.') }}
+{{ show_plot('roc_curves',         'Courbes ROC',                'One-vs-Rest avec AUC par classe.') }}
+{{ show_plot('pr_curves',          'Courbes Précision-Rappel',   'AP par classe.') }}
+{{ show_plot('feature_importance', 'Importance des features',    'Top coefficients TF-IDF par classe.') }}
+{{ show_plot('learning_curve',     'Courbe d\'apprentissage',    'Train vs CV score en fonction de la taille.') }}
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — SentimentX{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="fw-bold">Dashboard</h2>
+    <p class="text-muted">Analyse de sentiment multi-classes sur tweets Twitter</p>
+  </div>
+</div>
+
+<!-- Statut modèle -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card p-3 text-center">
+      {% if model_ready %}
+        <div class="fs-1">✅</div>
+        <div class="fw-bold mt-1">Modèle prêt</div>
+        <div class="text-muted small">TF-IDF + classifieur</div>
+      {% else %}
+        <div class="fs-1">⚠️</div>
+        <div class="fw-bold mt-1">Modèle absent</div>
+        <div class="text-muted small">Lance pipeline.py</div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if metrics %}
+  <div class="col-md-3">
+    <div class="card p-3 text-center">
+      <div class="fs-3 fw-bold text-primary">{{ "%.1f"|format(metrics.accuracy * 100) }}%</div>
+      <div class="fw-bold">Accuracy</div>
+      <div class="text-muted small">Jeu de test</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3 text-center">
+      <div class="fs-3 fw-bold text-success">{{ "%.4f"|format(metrics.f1_macro) }}</div>
+      <div class="fw-bold">F1-Macro</div>
+      <div class="text-muted small">Métrique principale</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3 text-center">
+      <div class="fs-3 fw-bold text-warning">4</div>
+      <div class="fw-bold">Classes</div>
+      <div class="text-muted small">Pos · Neg · Neu · Irr</div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Liens rapides -->
+<div class="row g-3">
+  <div class="col-md-4">
+    <a href="/predict" class="card p-4 text-decoration-none text-dark d-block">
+      <div class="fs-2">🔍</div>
+      <h5 class="fw-bold mt-2">Prédire un tweet</h5>
+      <p class="text-muted small mb-0">Colle un tweet et obtiens le sentiment prédit avec sa confidence.</p>
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="/eda" class="card p-4 text-decoration-none text-dark d-block">
+      <div class="fs-2">📊</div>
+      <h5 class="fw-bold mt-2">Analyse exploratoire</h5>
+      <p class="text-muted small mb-0">Distribution des classes, longueur des tweets, n-grammes, nuages de mots.</p>
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="/metrics" class="card p-4 text-decoration-none text-dark d-block">
+      <div class="fs-2">📈</div>
+      <h5 class="fw-bold mt-2">Métriques du modèle</h5>
+      <p class="text-muted small mb-0">Matrice de confusion, courbes ROC, PR, importance des features.</p>
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Prédire — SentimentX{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <h2 class="fw-bold mb-1">Prédire un sentiment</h2>
+    <p class="text-muted mb-4">Colle un tweet en anglais et le modèle prédit son sentiment.</p>
+
+    <!-- Formulaire -->
+    <div class="card p-4 mb-4">
+      <form method="POST" action="/predict">
+        <div class="mb-3">
+          <label for="tweet" class="form-label fw-bold">Texte du tweet</label>
+          <textarea id="tweet" name="tweet" class="form-control" rows="4"
+                    placeholder="Ex: I absolutely love this new feature! It works perfectly."
+                    required>{% if result %}{{ request.form.get('tweet','') }}{% endif %}</textarea>
+        </div>
+        <button type="submit" class="btn btn-dark px-4">Analyser →</button>
+      </form>
+    </div>
+
+    <!-- Résultat -->
+    {% if result %}
+      {% if result.error is defined %}
+        <div class="alert alert-danger">{{ result.error }}</div>
+      {% else %}
+        <div class="card p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="badge badge-{{ result.label }} fs-5 px-3 py-2 text-white">
+              {{ result.label }}
+            </span>
+            <div>
+              <div class="fw-bold">Confidence : {{ "%.1f"|format(result.confidence * 100) }}%</div>
+              <div class="text-muted small">Texte nettoyé : <em>{{ result.cleaned_text[:120] }}</em></div>
+            </div>
+          </div>
+
+          <!-- Barres de probabilité -->
+          {% if result.probabilities %}
+          <hr/>
+          <div class="fw-bold mb-2">Probabilités par classe</div>
+          {% set colors = {'Positive':'#1976D2','Negative':'#D32F2F','Neutral':'#F57C00','Irrelevant':'#616161'} %}
+          {% for cls in ['Positive','Negative','Neutral','Irrelevant'] %}
+            {% set pct = (result.probabilities.get(cls, 0) * 100)|round(1) %}
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span class="small">{{ cls }}</span>
+                <span class="small fw-bold">{{ pct }}%</span>
+              </div>
+              <div class="progress" style="height:8px">
+                <div class="progress-bar" style="width:{{ pct }}%;background:{{ colors[cls] }}"></div>
+              </div>
+            </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

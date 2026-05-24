@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}EDA — SentimentX{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-1">Analyse exploratoire</h2>
+<p class="text-muted mb-4">Visualisations générées sur le jeu d'entraînement (Sections 2 & 3 du notebook).</p>
+
+{% macro show_plot(key, title, description) %}
+  <div class="card p-3 mb-4">
+    <h6 class="fw-bold">{{ title }}</h6>
+    <p class="text-muted small mb-2">{{ description }}</p>
+    {% if plots[key] %}
+      <img src="data:image/png;base64,{{ plots[key] }}" class="plot-img" alt="{{ title }}"/>
+    {% else %}
+      <div class="alert alert-secondary small py-2 mb-0">
+        Figure absente — lance pipeline.py pour générer les plots.
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{{ show_plot('missing_bar',            'Valeurs manquantes',           'Pourcentage de valeurs manquantes par colonne.') }}
+{{ show_plot('sentiment_distribution', 'Distribution du sentiment',    'Fréquences et proportions par classe.') }}
+{{ show_plot('balance_heatmap',        'Équilibre train vs test',      'Proportions comparées entre les deux splits.') }}
+{{ show_plot('tweet_length',           'Longueur des tweets',          'KDE + violin + boxplot par classe.') }}
+{{ show_plot('bigrams',                'Top bigrammes par classe',      'N-grammes les plus fréquents.') }}
+{{ show_plot('wordclouds',             'Nuages de mots par classe',    'Vocabulaire caractéristique de chaque sentiment.') }}
+{% endblock %}
