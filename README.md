@@ -1,46 +1,46 @@
-# 🚀 Twitter Sentiment Analysis App
+# 🚀 Application de Analyse de Sentiments Twitter
 
-This project is a Machine Learning web application that analyzes the sentiment of tweets and classifies them into **Positive**, **Negative**, or **Neutral**.
+Ce projet est une application de Machine Learning qui analyse les sentiments des tweets et les classe en trois catégories :
+**Positif**, **Négatif** ou **Neutre**.
 
-It includes a full pipeline: data preprocessing, model training, and a Flask web interface for predictions.
-
----
-
-## 📌 Features
-
-- Data cleaning and preprocessing
-- Exploratory Data Analysis (EDA)
-- Machine Learning model training
-- Sentiment classification (Positive / Negative / Neutral)
-- Flask web application for real-time predictions
+Le projet inclut un pipeline complet : prétraitement des données, entraînement du modèle et interface web avec Flask.
 
 ---
 
-## 🧠 Machine Learning Pipeline
+## 📌 Fonctionnalités
 
-1. Load dataset (Twitter Training & Validation data)
-2. Text preprocessing (cleaning, tokenization, etc.)
-3. Feature extraction (TF-IDF / vectorization)
-4. Model training
-5. Model evaluation
-6. Save trained model
-7. Deploy with Flask
+- Nettoyage et prétraitement des données
+- Analyse exploratoire des données (EDA)
+- Entraînement d’un modèle de Machine Learning
+- Classification des sentiments (Positif / Négatif / Neutre)
+- Interface web avec Flask pour les prédictions en temps réel
 
 ---
 
-## 🛠️ Tech Stack
+## 🧠 Pipeline de Machine Learning
+
+1. Chargement des datasets (Twitter Training & Validation)
+2. Prétraitement du texte (nettoyage, tokenisation, etc.)
+3. Extraction des caractéristiques (TF-IDF / vectorisation)
+4. Entraînement du modèle
+5. Évaluation du modèle
+6. Sauvegarde du modèle entraîné
+7. Déploiement avec Flask
+
+---
+
+## 🛠️ Technologies utilisées
 
 - Python 🐍
 - Flask 🌐
 - Pandas
 - NumPy
 - Scikit-learn
-- NLP techniques (TF-IDF, text cleaning)
+- NLP (TF-IDF, traitement de texte)
 
 ---
 
-
-## 📂 Project Structure
+## 📂 Structure du projet
 
 twitter-sentiment-app/
 │
